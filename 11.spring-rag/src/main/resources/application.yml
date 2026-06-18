@@ -1,0 +1,27 @@
+server:
+  port: 8090
+app:
+  key: ${KEY_API}
+  aimodel: llama-3.1-8b-instant
+  url: http://localhost:8080/v1
+
+spring:
+  docker:
+    compose:
+      enabled: true
+      file: 11.spring-rag/docker-compose.yml
+  ai:
+    vectorstore:
+      qdrant:
+        collection-name: springai
+    openai:
+      api-key: ${app.key}
+      base-url: ${app.url}
+      chat:
+        model: ${app.aimodel}
+      embedding:
+        model: all-minilm-l6-v2-q8_0
+
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
